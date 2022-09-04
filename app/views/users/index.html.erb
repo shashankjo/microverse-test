@@ -1,0 +1,51 @@
+<div class="container" style="padding-top: 50px">
+  <div class="row">
+    <div class="col-sm-2">
+      <%= form_tag(action: 'fetch_data', :method => :post) do %>
+        <button type="submit" class="btn btn-secondary">Fetch Data</button>
+      <% end %>
+    </div>
+    <div class="col-sm-2">
+      <%= form_tag(action: 'delete_data') do %>
+        <button type="submit" class="btn btn-danger">Delete Data</button>
+      <% end %>
+    </div>
+    <div class="col-sm-pull-12">
+      <% if users_record_exists?(@users) %>
+        <button type="button" class="btn btn-warning"><%= link_to "All users", action: 'index' %></button>
+        <button type="button" class="btn btn-warning"><%= link_to "Active users", action: 'index', status: 'Active' %></button>
+        <button type="button" class="btn btn-warning"><%= link_to "Inactive users", action: 'index', status: 'Inactive' %></button>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="container" style="text-align: center; padding-top: 25px">
+  <table class="table table-striped table-bordered" >
+    <thead>
+    <tr style="background-color: #00badb">
+      <th>ID</th>
+      <th>First name</th>
+      <th>Last name</th>
+      <th>Status</th>
+      <th>Email</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <th scope="row"><%= user.user_id %></th>
+        <td><%= user.first_name  %></td>
+        <td><%= user.last_name %></td>
+        <td><%= user.status %></td>
+        <td><%= user.email %></td>
+        <td><label class="label label-warning"><%= link_to "Show", action: 'show', id: user.id %></label></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate @users %>
+
+</div>
